@@ -1,0 +1,50 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+} 
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String@id @default(uuid())
+  name        String
+  email       String@unique 
+  password    String
+  level       String@unique
+
+  user_post Posts[]
+  user_comments Comment[]
+
+  @@map("user")
+}
+
+model Posts {
+  id          String@id @default(uuid())
+  title       String
+  post        String
+  created_at  DateTime @default(now())
+
+  user User @relation(fields: [posts_user], references: [id])
+  posts_user   String
+
+  post_comments Comment[]
+
+  @@map("posts")
+}
+
+model Comment {
+  id           String@id @default(uuid())
+  comment      String
+  created_at   DateTime @default(now())
+
+  post Posts @relation(fields: [post_id], references: [id])
+  post_id       String
+
+
+  user User @relation(fields: [comment_user], references: [id])
+  comment_user   String
+
+  @@map("comment")
+}
