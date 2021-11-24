@@ -16,6 +16,7 @@ model User {
 
   user_post Posts[]
   user_comments Comment[]
+  user_likes LikeDislike[]
 
   @@map("user")
 }
@@ -30,6 +31,7 @@ model Posts {
   posts_user   String
 
   post_comments Comment[]
+  post_like LikeDislike[]
 
   @@map("posts")
 }
@@ -42,9 +44,20 @@ model Comment {
   post Posts @relation(fields: [post_id], references: [id])
   post_id       String
 
-
   user User @relation(fields: [comment_user], references: [id])
   comment_user   String
 
   @@map("comment")
+}
+
+model LikeDislike{
+  id              String@id @default(uuid())
+  isLike          Boolean @default(dbgenerated("null"))
+
+  post Posts @relation(fields: [post_id], references: [id])
+  post_id         String
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id         String
+  @@map("likedislike")
 }
