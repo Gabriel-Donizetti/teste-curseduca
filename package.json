@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Gabriel-Donizetti <gabsdonizetti@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --exit-child src/server.ts"
+  },
   "dependencies": {
     "@prisma/client": "^3.3.0",
     "dotenv": "^10.0.0",
